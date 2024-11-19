@@ -12,7 +12,7 @@ function ToDoList() {
 
   const fetchTodos = async () => {
     try {
-      const response = await axios.get('https://todoappfunc.azurewebsites.net/api/get_todos?');
+      const response = await axios.get('https://todoappfunc.azurewebsites.net/api/get_todos');
       setTodos(response.data);
     } catch (error) {
       console.error('Error fetching todos:', error);
@@ -39,6 +39,7 @@ function ToDoList() {
 
   return (
     <div>
+      <h1>ToDo List</h1>
       <AddToDoForm onAdd={handleAddTodo} />
       {todos.map(todo => (
         <ToDoItem key={todo.RowKey} todo={todo} onDelete={handleDelete} onToggleCompleted={handleToggleCompleted} />
