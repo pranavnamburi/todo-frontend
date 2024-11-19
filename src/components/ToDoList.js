@@ -12,7 +12,7 @@ function ToDoList() {
 
   const fetchTodos = async () => {
     try {
-      const response = await axios.get('https://todoappfunc.azurewebsites.net/api/get_todos');
+      const response = await axios.get('https://todoappfunc.azurewebsites.net/api/get_todos?');
       setTodos(response.data);
     } catch (error) {
       console.error('Error fetching todos:', error);
