@@ -5,6 +5,8 @@ import AddToDoForm from './AddToDoForm';
 
 function ToDoList() {
   const [todos, setTodos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchTodos();
@@ -12,11 +14,14 @@ function ToDoList() {
 
   const fetchTodos = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get('https://todoappfunc.azurewebsites.net/api/get_todos');
       setTodos(response.data);
     } catch (error) {
       console.error('Error fetching todos:', error);
-      alert('Failed to fetch todos');
+      setError('Failed to fetch todos');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,9 +46,15 @@ function ToDoList() {
     <div>
       <h1>ToDo List</h1>
       <AddToDoForm onAdd={handleAddTodo} />
-      {todos.map(todo => (
-        <ToDoItem key={todo.RowKey} todo={todo} onDelete={handleDelete} onToggleCompleted={handleToggleCompleted} />
-      ))}
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        todos.map(todo => (
+          <ToDoItem key={todo.RowKey} todo={todo} onDelete={handleDelete} onToggleCompleted={handleToggleCompleted} />
+        ))
+      )}
     </div>
   );
 }

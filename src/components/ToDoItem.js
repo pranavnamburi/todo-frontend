@@ -1,50 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
-import ToDoItem from './ToDoItem';
-import AddToDoForm from './AddToDoForm';
 
-function ToDoList() {
-  const [todos, setTodos] = useState([]);
-
-  useEffect(() => {
-    fetchTodos();
-  }, []);
-
-  const fetchTodos = async () => {
+function ToDoItem({ todo, onDelete, onToggleCompleted }) {
+  const handleToggleCompleted = async () => {
     try {
-      const response = await axios.get('https://todoappfunc.azurewebsites.net/api/get_todos');
-      setTodos(response.data);
+      const updatedTodo = await axios.put('https://todoappfunc.azurewebsites.net/api/update_todos', {
+        RowKey: todo.RowKey,
+        Completed: !todo.Completed
+      });
+      onToggleCompleted(todo.RowKey, updatedTodo.data.Completed);
     } catch (error) {
-      console.error('Error fetching todos:', error);
-      alert('Failed to fetch todos');
+      console.error('Error updating todo:', error);
+      alert('Failed to update todo');
     }
   };
 
-  const handleAddTodo = (newTodo) => {
-    setTodos([...todos, newTodo]);
-  };
-
-  const handleDelete = (rowKey) => {
-    setTodos(todos.filter(todo => todo.RowKey !== rowKey));
-  };
-
-  const handleToggleCompleted = (rowKey) => {
-    setTodos(todos.map(todo => {
-      if (todo.RowKey === rowKey) {
-        return { ...todo, Completed: !todo.Completed };
-      }
-      return todo;
-    }));
+  const handleDelete = async () => {
+    try {
+      await axios.delete('https://todoappfunc.azurewebsites.net/api/delete_todos', {
+        data: { RowKey: todo.RowKey }
+      });
+      onDelete(todo.RowKey);
+    } catch (error) {
+      console.error('Error deleting todo:', error);
+      alert('Failed to delete todo');
+    }
   };
 
   return (
     <div>
-      <AddToDoForm onAdd={handleAddTodo} />
-      {todos.map(todo => (
-        <ToDoItem key={todo.RowKey} todo={todo} onDelete={handleDelete} onToggleCompleted={handleToggleCompleted} />
-      ))}
+      <input
+        type="checkbox"
+        checked={todo.Completed}
+        onChange={handleToggleCompleted}
+      />
+      <span>{todo.Title}</span>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   );
 }
 
-export default ToDoList;
+export default ToDoItem;
