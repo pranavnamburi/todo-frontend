@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ToDoItem from './ToDoItem';
 import AddToDoForm from './AddToDoForm';
+import './style.css';
 
 function ToDoList() {
   const [todos, setTodos] = useState([]);
@@ -43,18 +44,34 @@ function ToDoList() {
   };
 
   return (
-    <div>
-      <h1>ToDo List</h1>
-      <AddToDoForm onAdd={handleAddTodo} />
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : (
-        todos.map(todo => (
-          <ToDoItem key={todo.RowKey} todo={todo} onDelete={handleDelete} onToggleCompleted={handleToggleCompleted} />
-        ))
-      )}
+    <div className="container">
+      <div className="left-panel">
+        <h1>ToDo List</h1>
+        <AddToDoForm onAdd={handleAddTodo} />
+      </div>
+      <div className="right-panel">
+        {isLoading ? (
+          <p className="loading">Loading...</p>
+        ) : error ? (
+          <p className="error">{error}</p>
+        ) : todos.length === 0 ? (
+          <p className="empty">Nothing to do</p>
+        ) : (
+          <>
+            <h2 className="todo-heading">Things to Do</h2>
+            <ul className="todo-list">
+              {todos.map(todo => (
+                <ToDoItem
+                  key={todo.RowKey}
+                  todo={todo}
+                  onDelete={handleDelete}
+                  onToggleCompleted={handleToggleCompleted}
+                />
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
     </div>
   );
 }
