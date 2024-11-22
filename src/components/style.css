@@ -1,0 +1,156 @@
+/* Container to split into two halves */
+.container {
+    display: flex;
+    justify-content: space-between;
+    /* Left and right panels side by side */
+    height: 100vh;
+    /* Full height of the viewport */
+}
+
+/* Left and Right Panels - Each taking 50% of the screen */
+.left-panel,
+.right-panel {
+    flex: 1;
+    /* Each panel takes 50% of the container width */
+    display: flex;
+    flex-direction: column;
+    /* Stack content vertically */
+    justify-content: center;
+    /* Centers content vertically */
+    align-items: center;
+    /* Centers content horizontally */
+    padding: 20px;
+}
+
+/* Left Panel Styling */
+.left-panel {
+    background-color: #f4f4f9;
+    border-right: 1px solid #ddd;
+}
+
+/* ToDo List Heading Styling */
+.left-panel h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #4a90e2;
+    text-align: center;
+}
+
+/* Input Box and Button Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    /* Stack input and button vertically */
+    justify-content: center;
+    align-items: center;
+    /* Centers input field and button horizontally */
+    width: 100%;
+    /* Ensures form elements take full width inside the panel */
+}
+
+input[type="text"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 80%;
+    /* Form input width */
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #357ab8;
+}
+
+/* Right Panel Styling */
+.right-panel {
+    background-color: white;
+}
+
+/* ToDo List - Centered and displayed in column format */
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    /* Stack the to-do items vertically */
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.todo-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f4f4f9;
+    gap: 10px;
+    /* Reduced gap between checkbox and todo text */
+}
+
+.todo-item input[type="checkbox"] {
+    margin-right: 10px;
+    /* Provides small space between checkbox and text */
+}
+
+.todo-item .todo-text {
+    flex: 1;
+    /* Ensures the text takes the available space */
+}
+
+.todo-item button {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: auto;
+    /* Pushes the button to the right */
+}
+
+.todo-item button:hover {
+    background-color: #d55c50;
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    color: #888;
+    background-color: #e6e6e6;
+}
+
+/* Error and Loading Messages */
+p.error {
+    color: #d9534f;
+    text-align: center;
+}
+
+p.loading {
+    color: #5bc0de;
+    text-align: center;
+}
+
+p.empty {
+    text-align: center;
+    color: #888;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.todo-heading {
+    text-align: center;
+    color: #4a90e2;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
