@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ToDoItem from './ToDoItem';
 import AddToDoForm from './AddToDoForm';
-import './style.css';
+import './styles.css';
 
 function ToDoList() {
   const [todos, setTodos] = useState([]);
