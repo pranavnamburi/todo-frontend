@@ -28,13 +28,14 @@ function ToDoItem({ todo, onDelete, onToggleCompleted }) {
   };
 
   return (
-    <div>
+    <div className={`todo-item ${todo.Completed ? 'completed' : ''}`}>
       <input
         type="checkbox"
         checked={todo.Completed}
         onChange={handleToggleCompleted}
+        id={`todo-${todo.RowKey}`}
       />
-      <span>{todo.Title}</span>
+      <label htmlFor={`todo-${todo.RowKey}`} className="todo-text">{todo.Title}</label>
       <button onClick={handleDelete}>Delete</button>
     </div>
   );
